@@ -42,12 +42,12 @@ public class Arrow : MonoBehaviour {
 		collided = true;
 		float collisionY;
 		float points;
-		var bowSimpleScript = bow.GetComponent<BowSimple>();
+		var bowScript = bow.GetComponent<Bow>();
 
 		if(collision.transform.name == WALL) {
-			bowSimpleScript.AddReward(-0.002f);
-			bowSimpleScript.SetArrowsLeft(bowSimpleScript.GetArrowsLeft() - 1);
-			bowSimpleScript.DisplayArrowsLeft();
+			bowScript.AddReward(-0.002f);
+			bowScript.SetArrowsLeft(bowScript.GetArrowsLeft() - 1);
+			bowScript.DisplayArrowsLeft();
 		}
 		else if(collision.transform.name == TARGET) {
 			targetHit = true;
@@ -74,17 +74,17 @@ public class Arrow : MonoBehaviour {
 				points = 0.7f;
 
 			pointsTextMesh.text = "+" + points.ToString().Replace(",", ".");
-			bowSimpleScript.SetPoints(bowSimpleScript.GetComponent<BowSimple>().GetPoints() + points);
-			bowSimpleScript.DisplayPoints();
-			bowSimpleScript.AddReward(points);
-			bowSimpleScript.SetHits(bowSimpleScript.GetHits() + 1);
+			bowScript.SetPoints(bowScript.GetComponent<BowSimple>().GetPoints() + points);
+			bowScript.DisplayPoints();
+			bowScript.AddReward(points);
+			bowScript.SetHits(bowScript.GetHits() + 1);
 		}
 
-		bowSimpleScript.DisplayAccuracy();
+		bowScript.DisplayAccuracy();
 
-		if(bowSimpleScript.GetArrowsLeft() < 0) {
-			bowSimpleScript.AddReward((bowSimpleScript.arrowsOnStart - bowSimpleScript.GetHits()) * -0.1f);
-			bowSimpleScript.EndEpisode();
+		if(bowScript.GetArrowsLeft() < 0) {
+			bowScript.AddReward((bowScript.arrowsOnStart - bowScript.GetHits()) * -0.1f);
+			bowScript.EndEpisode();
 		}
 	}
 

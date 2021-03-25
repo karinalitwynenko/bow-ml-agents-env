@@ -24,7 +24,7 @@ public class Arrow : MonoBehaviour {
 				);
 			}
 			else {
-				bow.GetComponent<BowSimple>().CreateArrow();
+				bow.GetComponent<Bow>().CreateArrow();
 			}
 		}
 		else if (transform.GetComponent<Rigidbody>() != null) {
@@ -58,7 +58,7 @@ public class Arrow : MonoBehaviour {
 
 			GameObject pointsText = Instantiate(
 				pointsPrefab,
-				bow.GetComponent<BowSimple>().target.transform.position + new Vector3(-1f, 4f, -1f),
+				bowScript.target.transform.position + new Vector3(-1f, 4f, -1f),
 				Quaternion.identity,
 				this.transform
 			) as GameObject;
@@ -74,7 +74,7 @@ public class Arrow : MonoBehaviour {
 				points = 0.7f;
 
 			pointsTextMesh.text = "+" + points.ToString().Replace(",", ".");
-			bowScript.SetPoints(bowScript.GetComponent<BowSimple>().GetPoints() + points);
+			bowScript.SetPoints(bowScript.GetPoints() + points);
 			bowScript.DisplayPoints();
 			bowScript.AddReward(points);
 			bowScript.SetHits(bowScript.GetHits() + 1);
@@ -83,7 +83,8 @@ public class Arrow : MonoBehaviour {
 		bowScript.DisplayAccuracy();
 
 		if(bowScript.GetArrowsLeft() < 0) {
-			bowScript.AddReward((bowScript.arrowsOnStart - bowScript.GetHits()) * -0.1f);
+			bowScript.SetReward(bowScript.GetPoints() + (bowScript.arrowsOnStart - bowScript.GetHits()) * -0.1f);
+			// bowScript.AddReward((bowScript.arrowsOnStart - bowScript.GetHits()) * -0.1f);
 			bowScript.EndEpisode();
 		}
 	}

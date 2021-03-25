@@ -7,6 +7,12 @@ using Unity.MLAgents.Sensors;
 public class Bow : Agent {
 	[Tooltip("Maximum number of arrows available in an episode.")]
 	public int arrowsOnStart;
+	protected GameObject arrow;
+	public GameObject arrowPrefab;
+	public GameObject target;
+	public LineRenderer bowstring;
+	protected bool isArrowPrepared;
+	protected bool isBowstringPulled;
 	public TextMesh pointsTextMesh;
 	public TextMesh arrowsTextMesh;
 	public TextMesh accuracyTextMesh;
@@ -14,6 +20,16 @@ public class Bow : Agent {
 	protected int hits;
 	protected float points;
 	
+	public void CreateArrow() {
+		Destroy(arrow);
+		arrow = Instantiate(arrowPrefab, Vector3.zero, this.transform.localRotation) as GameObject;
+		arrow.transform.parent = this.transform;
+		arrow.name = "Arrow";
+		arrow.transform.localPosition = new Vector3 (0.98f, 0, -0.1f);
+		arrow.GetComponent<Arrow>().SetBow(gameObject);
+		isArrowPrepared = true;
+	}
+
 	public void SetHits(int hits) {
 		this.hits = hits;
 	}

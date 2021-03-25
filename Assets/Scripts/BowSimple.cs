@@ -6,12 +6,6 @@ using Unity.MLAgents.Sensors;
 
 public class BowSimple : Bow {
 	public bool animateBowstring;
-	GameObject arrow;
-	public GameObject arrowPrefab;
-	public GameObject target;
-	public LineRenderer bowstring;
-	bool isArrowPrepared;
-	bool isBowstringPulled;
 	Vector3 maxBowstringPullout = new Vector3(-2.6f, 0, 0.01f);
 	Vector3 bowstringRestPullout = new Vector3(-0.54f, 0, 0.01f);
 
@@ -81,20 +75,6 @@ public class BowSimple : Bow {
 			}
 			
 		}
-	}
-
-	void Start() {
-		CreateArrow();
-	}
-
-	public void CreateArrow() {
-		Destroy(arrow);
-		arrow = Instantiate(arrowPrefab, Vector3.zero, this.transform.localRotation) as GameObject;
-		arrow.transform.parent = this.transform;
-		arrow.name = "Arrow";
-		arrow.transform.localPosition = new Vector3 (0.98f, 0, -0.1f);
-		arrow.GetComponent<Arrow>().SetBow(gameObject);
-		isArrowPrepared = true;
 	}
 
 	public void Shoot() {
